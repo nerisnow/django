@@ -9,8 +9,8 @@ import json
 
 from collections import Counter
 
-TRAIN_SRC = '/home/gunner/PycharmProjects/minorb/minor/bayes/train.csv'
-TEST_SRC =  '/home/gunner/PycharmProjects/minorb/minor/bayes/test.csv'
+TRAIN_SRC = '/home/ubuntu/django/bayes/train.csv'
+TEST_SRC =  '/home/ubuntu/django/bayes/test.csv'
 
 with open(TRAIN_SRC, 'r') as file:
   trainset = list(csv.reader(file))
