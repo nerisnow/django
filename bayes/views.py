@@ -3,22 +3,36 @@ from django.http import HttpResponse,JsonResponse
 import re #for splitting
 import csv
 import json
+import nltk
 
-
+nltk.download('stopwords')
 
 
 from collections import Counter
+from nltk.corpus import stopwords
 
-TRAIN_SRC = '/home/ubuntu/django/bayes/train.csv'
-TEST_SRC =  '/home/ubuntu/django/bayes/test.csv'
+TRAIN_SRC = '/home/ubuntu/django/bayes/train1.csv'
+TEST_SRC =  '/home/ubuntu/django/bayes/test1.csv'
 
 with open(TRAIN_SRC, 'r') as file:
   trainset = list(csv.reader(file))
 
+
+
 def get_text(reviews, score):
   # Join together the text in the reviews for a particular tone(positive or negative tone)
   #  making all lowercase to avoid "Not" and "not" being seen as different words, for example.
-  return " ".join([r[0].lower() for r in trainset if r[1] == str(score)])
+  #return " ".join([r[0].lower() for r in trainset if r[1] == str(score)])
+  lowerwords=" ".join([r[0].lower() for r in trainset if r[1] == str(score)])
+  #print(lowerwords)
+  words = re.split("\s+", lowerwords)
+  #print(words)
+  #print(words[1])
+  stop_words = set(stopwords.words('english'))
+  filterwords=[w for w in words if not w in stop_words & {'so','very'}]
+  #print(filterwords)
+  return " ".join(f for f in filterwords)
+  #print(stop_words)
 
 def count_text(text):
   # Split text into words based on whitespace
@@ -104,3 +118,4 @@ def testfunc(request):
 # print("AUC of the predictions: {0}".format(metrics.auc(fpr, tpr)))
 
 # Create your views here.
+
