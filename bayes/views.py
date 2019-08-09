@@ -98,9 +98,9 @@ def testfunc(request):
     prediction = [make_decision(r, make_class_prediction)]
 
     if prediction == [1]:
-        weightMatrix.append({"review": r, "positive": 1})
+        weightMatrix.append({"review": r, "status": 1})
     else:
-        weightMatrix.append({"review": r, "positive": 0})
+        weightMatrix.append({"review": r, "status": 0})
 
     return JsonResponse(weightMatrix, safe=False)
 
